@@ -29,6 +29,7 @@ class HomePage extends StatelessWidget {
             children: [
               Expanded(
                 child: ShadowContainer(
+                  containerHeight: 230,
                   containerChild: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -48,16 +49,20 @@ class HomePage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          RoundedButton(
-                              childIcon: Icon(
-                            FontAwesomeIcons.plus,
-                            color: Colors.blueAccent,
-                          )),
-                          RoundedButton(
-                              childIcon: Icon(
-                            FontAwesomeIcons.minus,
-                            color: Colors.blueAccent,
-                          ))
+                          Expanded(
+                            child: RoundedButton(
+                                childIcon: Icon(
+                              FontAwesomeIcons.plus,
+                              color: Colors.blueAccent,
+                            )),
+                          ),
+                          Expanded(
+                            child: RoundedButton(
+                                childIcon: Icon(
+                              FontAwesomeIcons.minus,
+                              color: Colors.blueAccent,
+                            )),
+                          )
                         ],
                       )
                     ],
@@ -66,40 +71,84 @@ class HomePage extends StatelessWidget {
               ),
               Expanded(
                 child: ShadowContainer(
+                    containerHeight: 230,
                     containerChild: Column(
-                  children: [
-                    Text(
-                      'Gender',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.man,
-                          size: 70,
+                        Text(
+                          'Gender',
+                          style: TextStyle(fontWeight: FontWeight.w700),
                         ),
-                        Icon(
-                          Icons.woman,
-                          size: 70,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.man,
+                              size: 70,
+                            ),
+                            Icon(
+                              Icons.woman,
+                              size: 70,
+                            ),
+                          ],
                         ),
+                        SizedBox(height: 5),
+                        LiteRollingSwitch(
+                          textOff: 'Female',
+                          textOn: 'Male',
+                          textOnColor: Colors.white,
+                          iconOff: Icons.check,
+                          colorOff: Colors.blueAccent,
+                          colorOn: Colors.blueAccent,
+                          onTap: () {},
+                          onDoubleTap: () {},
+                          onSwipe: () {},
+                          onChanged: (value) {},
+                        )
                       ],
-                    ),
-                    LiteRollingSwitch(
-                        textOff: 'Female',
-                        textOn: 'Male',
-                        textOnColor: Colors.white,
-                        iconOff: Icons.check,
-                        colorOff: Colors.blueAccent,
-                        colorOn: Colors.blueAccent,
-                        onTap: () {},
-                        onDoubleTap: () {},
-                        onSwipe: () {},
-                        onChanged: (value) {})
-                  ],
-                )),
-              )
+                    )),
+              ),
             ],
+          ),
+          ShadowContainer(
+            containerChild: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Height ',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text('cm'),
+                  ],
+                ),
+                RotatedBox(
+                    quarterTurns: 2,
+                    child: Image.asset('assets/images/meter icon.png')),
+                Container(
+                  height: 70,
+                  decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: RotatedBox(
+                    quarterTurns: 1,
+                    child: ListWheelScrollView.useDelegate(
+                        physics: FixedExtentScrollPhysics(),
+                        itemExtent: 70,
+                        magnification: 1.5,
+                        useMagnifier: true,
+                        childDelegate: ListWheelChildBuilderDelegate(
+                            builder: (context, index) {
+                          return RotatedBox(
+                              quarterTurns: 3,
+                              child: Text(
+                                '${index + 120}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w900, fontSize: 20),
+                              ));
+                        })),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -110,14 +159,17 @@ class HomePage extends StatelessWidget {
 class ShadowContainer extends StatelessWidget {
   const ShadowContainer({
     required this.containerChild,
+    this.containerHeight,
     super.key,
   });
 
   final Widget containerChild;
+  final double? containerHeight;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: containerHeight,
       padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
