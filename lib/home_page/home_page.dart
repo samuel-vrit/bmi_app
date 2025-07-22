@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   double selectedWeight = 70;
+  int selectedAge = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 //Age
                 Expanded(
+                  flex: 1,
                   child: ShadowContainer(
                     // containerHeight: 220,
                     containerChild: Column(
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          '20',
+                          selectedAge.toString(),
                           style: TextStyle(
                             fontWeight: FontWeight.w900,
                             fontSize: 40,
@@ -137,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text('Height ',
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
+                              fontSize: 20, fontWeight: FontWeight.bold)),
                       Text('cm'),
                     ],
                   ),
@@ -147,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                         'assets/images/meter icon.png',
                       )),
                   Container(
-                    height: 40,
+                    height: 55,
                     decoration: BoxDecoration(
                         color: Colors.blueAccent,
                         borderRadius: BorderRadius.circular(12)),
@@ -191,13 +193,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text('Weight ',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                            fontSize: 20, fontWeight: FontWeight.bold)),
                     Text('kg'),
                   ],
                 ),
                 Text(
                   selectedWeight.toInt().toString(),
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w900),
                 ),
                 Expanded(
                   child: Slider(
@@ -216,23 +218,21 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //Calculate
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              height: 60,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text(
-                  'Calculate',
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            height: 70,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Text(
+                'Calculate',
+                style: TextStyle(
+                  fontSize: 32,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
