@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  double selectedWeight = 70;
 
   @override
   Widget build(BuildContext context) {
@@ -25,129 +32,209 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: ShadowContainer(
-                  containerHeight: 230,
-                  containerChild: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          //Age and Gender
+          Expanded(
+            flex: 4,
+            child: Row(
+              children: [
+                //Age
+                Expanded(
+                  child: ShadowContainer(
+                    // containerHeight: 220,
+                    containerChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Age',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          '20',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 40,
+                          ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: RoundedButton(
+                                    childIcon: Icon(
+                                  FontAwesomeIcons.plus,
+                                  color: Colors.blueAccent,
+                                )),
+                              ),
+                              Expanded(
+                                child: RoundedButton(
+                                    childIcon: Icon(
+                                  FontAwesomeIcons.minus,
+                                  color: Colors.blueAccent,
+                                )),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                //Gender
+                Expanded(
+                  child: ShadowContainer(
+                      // containerHeight: 220,
+                      containerChild: Column(
                     children: [
                       Text(
-                        'Age',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        '20',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 40,
-                        ),
+                        'Gender',
+                        style: TextStyle(fontWeight: FontWeight.w700),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: RoundedButton(
-                                childIcon: Icon(
-                              FontAwesomeIcons.plus,
-                              color: Colors.blueAccent,
-                            )),
+                          Icon(
+                            Icons.man,
+                            size: 70,
                           ),
-                          Expanded(
-                            child: RoundedButton(
-                                childIcon: Icon(
-                              FontAwesomeIcons.minus,
-                              color: Colors.blueAccent,
-                            )),
-                          )
+                          Icon(
+                            Icons.woman,
+                            size: 70,
+                          ),
                         ],
+                      ),
+                      SizedBox(height: 5),
+                      LiteRollingSwitch(
+                        textOff: 'Female',
+                        textOn: 'Male',
+                        textOnColor: Colors.white,
+                        iconOff: Icons.check,
+                        colorOff: Colors.blueAccent,
+                        colorOn: Colors.blueAccent,
+                        onTap: () {},
+                        onDoubleTap: () {},
+                        onSwipe: () {},
+                        onChanged: (value) {},
                       )
                     ],
-                  ),
+                  )),
                 ),
-              ),
-              Expanded(
-                child: ShadowContainer(
-                    containerHeight: 230,
-                    containerChild: Column(
-                      children: [
-                        Text(
-                          'Gender',
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.man,
-                              size: 70,
-                            ),
-                            Icon(
-                              Icons.woman,
-                              size: 70,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5),
-                        LiteRollingSwitch(
-                          textOff: 'Female',
-                          textOn: 'Male',
-                          textOnColor: Colors.white,
-                          iconOff: Icons.check,
-                          colorOff: Colors.blueAccent,
-                          colorOn: Colors.blueAccent,
-                          onTap: () {},
-                          onDoubleTap: () {},
-                          onSwipe: () {},
-                          onChanged: (value) {},
-                        )
-                      ],
-                    )),
-              ),
-            ],
+              ],
+            ),
           ),
-          ShadowContainer(
-            containerChild: Column(
+
+          //Height
+          Expanded(
+            flex: 4,
+            child: ShadowContainer(
+              containerChild: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Height ',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text('cm'),
+                    ],
+                  ),
+                  RotatedBox(
+                      quarterTurns: 2,
+                      child: Image.asset(
+                        'assets/images/meter icon.png',
+                      )),
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: RotatedBox(
+                      quarterTurns: 1,
+                      child: ListWheelScrollView.useDelegate(
+                          physics: FixedExtentScrollPhysics(),
+                          itemExtent: 70,
+                          magnification: 1.5,
+                          useMagnifier: true,
+                          childDelegate: ListWheelChildBuilderDelegate(
+                              childCount: 101,
+                              builder: (context, index) {
+                                return RotatedBox(
+                                    quarterTurns: 3,
+                                    child: Center(
+                                      child: Text(
+                                        '${index + 120}',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 20),
+                                      ),
+                                    ));
+                              })),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+
+          //Weight
+          Expanded(
+            flex: 3,
+            child: ShadowContainer(
+                // containerHeight: 100,
+                containerChild: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Height ',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text('cm'),
+                    Text('Weight ',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text('kg'),
                   ],
                 ),
-                RotatedBox(
-                    quarterTurns: 2,
-                    child: Image.asset('assets/images/meter icon.png')),
-                Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: ListWheelScrollView.useDelegate(
-                        physics: FixedExtentScrollPhysics(),
-                        itemExtent: 70,
-                        magnification: 1.5,
-                        useMagnifier: true,
-                        childDelegate: ListWheelChildBuilderDelegate(
-                            builder: (context, index) {
-                          return RotatedBox(
-                              quarterTurns: 3,
-                              child: Text(
-                                '${index + 120}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900, fontSize: 20),
-                              ));
-                        })),
-                  ),
+                Text(
+                  selectedWeight.toInt().toString(),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                ),
+                Expanded(
+                  child: Slider(
+                      min: 20,
+                      max: 150,
+                      activeColor: Colors.blueAccent,
+                      value: selectedWeight,
+                      onChanged: (weight) {
+                        setState(() {
+                          selectedWeight = weight;
+                        });
+                      }),
                 )
               ],
+            )),
+          ),
+
+          //Calculate
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Text(
+                  'Calculate',
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
