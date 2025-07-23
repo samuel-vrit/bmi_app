@@ -1,6 +1,12 @@
+import 'package:bmi_app/components/buttom_button.dart';
+import 'package:bmi_app/components/rounded_button.dart';
+import 'package:bmi_app/constants.dart';
+import 'package:bmi_app/screens/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+
+import '../components/shadow_container.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -48,16 +54,11 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           'Age',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: kSubHeadingTextStyle,
                         ),
                         Text(
                           selectedAge.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 40,
-                          ),
+                          style: kNumberTextStyle,
                         ),
                         Expanded(
                           child: Row(
@@ -65,17 +66,28 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Expanded(
                                 child: RoundedButton(
+                                    onTap: () {
+                                      selectedAge++;
+                                      setState(() {});
+                                    },
                                     childIcon: Icon(
-                                  FontAwesomeIcons.plus,
-                                  color: Colors.blueAccent,
-                                )),
+                                      FontAwesomeIcons.plus,
+                                      color: kThemeColor,
+                                    )),
                               ),
                               Expanded(
                                 child: RoundedButton(
+                                    onTap: () {
+                                      selectedAge--;
+                                      selectedAge < 1
+                                          ? selectedAge = 1
+                                          : selectedAge--;
+                                      setState(() {});
+                                    },
                                     childIcon: Icon(
-                                  FontAwesomeIcons.minus,
-                                  color: Colors.blueAccent,
-                                )),
+                                      FontAwesomeIcons.minus,
+                                      color: kThemeColor,
+                                    )),
                               )
                             ],
                           ),
@@ -92,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text(
                         'Gender',
-                        style: TextStyle(fontWeight: FontWeight.w700),
+                        style: kHeadingTextStyle,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -109,12 +121,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SizedBox(height: 5),
                       LiteRollingSwitch(
-                        textOff: 'Female',
-                        textOn: 'Male',
+                        textOff: 'Male',
+                        textOn: 'Female',
                         textOnColor: Colors.white,
                         iconOff: Icons.check,
-                        colorOff: Colors.blueAccent,
-                        colorOn: Colors.blueAccent,
+                        colorOff: kThemeColor,
+                        colorOn: kThemeColor,
                         onTap: () {},
                         onDoubleTap: () {},
                         onSwipe: () {},
@@ -137,10 +149,8 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Height ',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                      Text('cm'),
+                      Text('Height ', style: kHeadingTextStyle),
+                      Text('cm', style: kSubHeadingTextStyle),
                     ],
                   ),
                   RotatedBox(
@@ -151,10 +161,10 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     height: 55,
                     decoration: BoxDecoration(
-                        color: Colors.blueAccent,
+                        color: kThemeColor,
                         borderRadius: BorderRadius.circular(12)),
                     child: RotatedBox(
-                      quarterTurns: 1,
+                      quarterTurns: 3,
                       child: ListWheelScrollView.useDelegate(
                           physics: FixedExtentScrollPhysics(),
                           itemExtent: 70,
@@ -164,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                               childCount: 101,
                               builder: (context, index) {
                                 return RotatedBox(
-                                    quarterTurns: 3,
+                                    quarterTurns: 1,
                                     child: Center(
                                       child: Text(
                                         '${index + 120}',
@@ -191,21 +201,19 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Weight ',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
-                    Text('kg'),
+                    Text('Weight ', style: kHeadingTextStyle),
+                    Text('kg', style: kSubHeadingTextStyle),
                   ],
                 ),
                 Text(
                   selectedWeight.toInt().toString(),
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w900),
+                  style: kNumberTextStyle,
                 ),
                 Expanded(
                   child: Slider(
                       min: 20,
                       max: 150,
-                      activeColor: Colors.blueAccent,
+                      activeColor: kThemeColor,
                       value: selectedWeight,
                       onChanged: (weight) {
                         setState(() {
@@ -218,79 +226,16 @@ class _HomePageState extends State<HomePage> {
           ),
 
           //Calculate
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            height: 70,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Center(
-              child: Text(
-                'Calculate',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+          ButtomButton(
+            title: 'Calculate',
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ResultPage();
+              }));
+            },
           ),
         ],
       ),
-    );
-  }
-}
-
-class ShadowContainer extends StatelessWidget {
-  const ShadowContainer({
-    required this.containerChild,
-    this.containerHeight,
-    super.key,
-  });
-
-  final Widget containerChild;
-  final double? containerHeight;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: containerHeight,
-      padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(5, 5),
-            blurRadius: 5,
-            color: Colors.black26,
-          )
-        ],
-        color: Colors.white,
-      ),
-      child: containerChild,
-    );
-  }
-}
-
-class RoundedButton extends StatelessWidget {
-  const RoundedButton({
-    required this.childIcon,
-    super.key,
-  });
-
-  final Widget childIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () {},
-      shape: CircleBorder(),
-      fillColor: Colors.white,
-      elevation: 2,
-      child: childIcon,
     );
   }
 }
