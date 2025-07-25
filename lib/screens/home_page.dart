@@ -1,3 +1,4 @@
+import 'package:bmi_app/bmi_calculator.dart';
 import 'package:bmi_app/components/buttom_button.dart';
 import 'package:bmi_app/components/rounded_button.dart';
 import 'package:bmi_app/constants.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double selectedWeight = 70;
   int selectedAge = 20;
+  int selectedHeight = 120;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           'Age',
-                          style: kSubHeadingTextStyle,
+                          style: kHeadingTextStyle,
                         ),
                         Text(
                           selectedAge.toString(),
@@ -170,6 +172,9 @@ class _HomePageState extends State<HomePage> {
                           itemExtent: 70,
                           magnification: 1.5,
                           useMagnifier: true,
+                          onSelectedItemChanged: (height) {
+                            selectedHeight = height + 120;
+                          },
                           childDelegate: ListWheelChildBuilderDelegate(
                               childCount: 101,
                               builder: (context, index) {
@@ -229,8 +234,13 @@ class _HomePageState extends State<HomePage> {
           ButtomButton(
             title: 'Calculate',
             onTap: () {
+              BMICalculator bmiCalculator =
+                  BMICalculator(height: selectedHeight, weight: selectedWeight);
+
+              String calculatedBmi = bmiCalculator.calculateBMI();
+
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ResultPage();
+                return ResultPage(bmiResult: calculatedBmi);
               }));
             },
           ),
