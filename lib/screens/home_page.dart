@@ -10,7 +10,7 @@ import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import '../components/shadow_container.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -239,8 +239,19 @@ class _HomePageState extends State<HomePage> {
 
               String calculatedBmi = bmiCalculator.calculateBMI();
 
+              String bmiGrade = bmiCalculator.getBmiGrade();
+
+              String bmiSuggestion = bmiCalculator.getSuggestion();
+
+              Color gradeColor = bmiCalculator.getGradeColor();
+
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ResultPage(bmiResult: calculatedBmi);
+                return ResultPage(
+                  bmiResult: calculatedBmi,
+                  bmiGrade: bmiGrade,
+                  bmiSuggestion: bmiSuggestion,
+                  gradeColor: gradeColor,
+                );
               }));
             },
           ),

@@ -4,9 +4,17 @@ import 'package:bmi_app/constants.dart';
 import 'package:flutter/material.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({required this.bmiResult, super.key});
+  const ResultPage(
+      {required this.bmiResult,
+      required this.bmiGrade,
+      required this.bmiSuggestion,
+      required this.gradeColor,
+      super.key});
 
   final String bmiResult;
+  final String bmiGrade;
+  final String bmiSuggestion;
+  final Color gradeColor;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +48,8 @@ class ResultPage extends StatelessWidget {
                 containerChild: Column(
                   children: [
                     Text(
-                      'Normal',
-                      style: kHeadingTextStyle.copyWith(color: Colors.green),
+                      bmiGrade,
+                      style: kHeadingTextStyle.copyWith(color: gradeColor),
                     ),
                     SizedBox(height: 150),
                     Text(
@@ -51,7 +59,7 @@ class ResultPage extends StatelessWidget {
                     ),
                     SizedBox(height: 100),
                     Text(
-                      'You have a normal body weight. Good job!',
+                      bmiSuggestion,
                       style: kSubHeadingTextStyle.copyWith(
                           fontWeight: FontWeight.bold),
                     )
